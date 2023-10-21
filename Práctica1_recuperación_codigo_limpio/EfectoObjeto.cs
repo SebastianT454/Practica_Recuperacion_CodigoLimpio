@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Práctica1_recuperación_codigo_limpio
 {
-    internal class EfectoObjeto
+    public class EfectoObjeto
     {
+
     }
 }

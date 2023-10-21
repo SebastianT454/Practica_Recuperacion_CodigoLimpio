@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace Práctica1_recuperación_codigo_limpio
 {
-    internal class Habilidad
+    public class Habilidad
     {
+        public void Ejecutar()
+        {
+
+        }
     }
+
 }

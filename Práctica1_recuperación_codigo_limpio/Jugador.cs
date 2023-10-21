@@ -7,10 +7,17 @@ using System.Threading.Tasks;
 
 namespace Práctica1_recuperación_codigo_limpio
 {
+    public enum Direction
+    {
+        Up,
+        Down,
+        Left,
+        Right
+    }
     public class Jugador
     {
         private string nombre;
-        private Point posición;
+        private Point posicion;
         private int vida;
         private int fuerza;
         private Habilidad habilidad;
@@ -18,7 +25,7 @@ namespace Práctica1_recuperación_codigo_limpio
         public Jugador(string nombre, Point posición, int vida, int fuerza, Habilidad habilidad)
         {
             this.nombre = nombre;
-            this.posición = posición;
+            this.posicion = posición;
             this.vida = vida;
             this.fuerza = fuerza;
             this.habilidad = habilidad;
@@ -29,9 +36,9 @@ namespace Práctica1_recuperación_codigo_limpio
             get { return nombre; }
         }
 
-        public Point Posición
+        public Point Posicion
         {
-            get { return posición; }
+            get { return posicion; }
         }
 
         public int Vida
@@ -46,19 +53,32 @@ namespace Práctica1_recuperación_codigo_limpio
             set { fuerza = value; }
         }
 
-        public Habilidad Habilidad
+        private Habilidad Habilidad
         {
             get { return habilidad; }
         }
 
-        public void Mover(Direction dirección)
+        public void Mover(Mapa mapa, Direction direccion, Point posicion)
         {
-            posición = posición + dirección;
+            // Verifica si la nueva posición está ocupada
+            Point nuevaPosición = new Point(posicion.X + direccion.X, posicion.Y + direccion.Y);
+            if (mapa.jugadores.Contains(nuevaPosición))
+            {
+                // No se mueve
+                return;
+            }
+
+            posicion = nuevaPosición;
         }
 
-        public void UsarHabilidad()
+        public void UsarHabilidad(Jugador jugador)
         {
-            habilidad.Ejecutar();
+            jugador.habilidad.Ejecutar();
         }
 
+        public void UsarObjeto(Objeto objeto)
+        {
+
+        }
     }
+}

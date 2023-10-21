@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,10 @@ namespace Práctica1_recuperación_codigo_limpio
             this.tamaño = tamaño;
             this.objetos = new List<Objeto>();
             this.jugadores = new List<Jugador>();
+        }
+        public List<Jugador> Jugadores
+        {
+            get { return jugadores; }
         }
 
         public void Mostrar()
@@ -71,6 +76,7 @@ namespace Práctica1_recuperación_codigo_limpio
                 }
             }
         }
+
     }
 
 }
