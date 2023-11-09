@@ -20,14 +20,14 @@ namespace Práctica1_recuperación_codigo_limpio
         private Point posicion;
         private int vida;
         private int fuerza;
-        private Habilidad habilidad;
+        private IHabilidad habilidad;
 
-        public Jugador(string nombre, Point posición, int vida, int fuerza, Habilidad habilidad)
+        public Jugador(string nombre, Point posicion, IHabilidad habilidad)
         {
             this.nombre = nombre;
-            this.posicion = posición;
-            this.vida = vida;
-            this.fuerza = fuerza;
+            this.posicion = posicion;
+            this.vida = 0;
+            this.fuerza = 0;
             this.habilidad = habilidad;
         }
 
@@ -58,17 +58,10 @@ namespace Práctica1_recuperación_codigo_limpio
             get { return habilidad; }
         }
 
-        public void Mover(Mapa mapa, Direction direccion, Point posicion)
+        public void Mover(Mapa mapa, Point posicion)
         {
             // Verifica si la nueva posición está ocupada
-            Point nuevaPosición = new Point(posicion.X + direccion.X, posicion.Y + direccion.Y);
-            if (mapa.jugadores.Contains(nuevaPosición))
-            {
-                // No se mueve
-                return;
-            }
 
-            posicion = nuevaPosición;
         }
 
         public void UsarHabilidad(Jugador jugador)

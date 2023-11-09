@@ -9,58 +9,90 @@ namespace Práctica1_recuperación_codigo_limpio
 {
     public class Mapa
     {
-        private int[,] matriz;
-        private int tamaño;
+        private string[][] matriz;
+        private Point tamano_matriz;
         private List<Objeto> objetos;
         private List<Jugador> jugadores;
 
-        public Mapa(int[,] matriz, int tamaño)
+        public Mapa(int m, int n)
         {
-            this.matriz = matriz;
-            this.tamaño = tamaño;
+            this.matriz = Mapa.Crear_Matriz(m,n);
+            this.tamano_matriz = new Point(m,n);
             this.objetos = new List<Objeto>();
             this.jugadores = new List<Jugador>();
+        }
+        public string[][] Matriz
+        {
+            get { return matriz; }
+        }
+        public Point TamanoMatriz
+        {
+            get { return tamano_matriz; }
+        }
+        public List<Objeto> Objetos
+        {
+            get { return objetos; }
         }
         public List<Jugador> Jugadores
         {
             get { return jugadores; }
         }
+        public static string[][] Crear_Matriz(int m, int n)
+        {
+            string[][] matrix = new string[m][];
+
+            for (int i = 0; i < m; i++)
+            {
+                matrix[i] = new string[n];
+                for (int j = 0; j < n; j++)
+                {
+                    matrix[i][j] = "-";
+                }
+            }
+
+            return matrix;
+        }
 
         public void Mostrar()
         {
-            for (int i = 0; i < tamaño; i++)
+            string[][] matrix = this.matriz;
+
+            // Recorremos las filas de la matriz
+            for (int i = 0; i < matrix.Length; i++)
             {
-                for (int j = 0; j < tamaño; j++)
+                // Imprimimos la fila i
+                for (int j = 0; j < matrix[i].Length; j++)
                 {
-                    if (jugadores.Contains((i, j)))
-                    {
-                        Console.Write(jugadores[(i, j)].Nombre);
-                    }
-                    else if (objetos.Contains((i, j)))
-                    {
-                        Console.Write(objetos[(i, j)].Tipo);
-                    }
-                    else
-                    {
-                        Console.Write(" ");
-                    }
+                    Console.Write(" " + matrix[i][j]);
                 }
                 Console.WriteLine();
             }
         }
 
+        
+        public void AsignarJugadores() 
+        {
+            string[][] matrix = matriz;
+            int m = tamano_matriz.X;
+            int n = tamano_matriz.Y;
+
+            IHabilidad habilidad_Alien = new HabilidadAlien();
+            IHabilidad habilidad_Depredador = new HabilidadDepredador();
+
+            // Generamos un objeto de jugador X.
+            Jugador jugadorX = new Jugador("X", new Point(0, 0), habilidad_Alien);
+
+            // Generamos un objeto de jugador Y.
+            Jugador jugadorY = new Jugador("Y", new Point(m - 1, n - 1), habilidad_Depredador);
+
+            // Asignamos los jugadores.
+            matrix[0][0] = jugadorX.Nombre;
+            matrix[m - 1][n - 1] = jugadorY.Nombre;
+        }
+        
         public void ColocarObjetos()
         {
-            for (int i = 0; i < tamaño; i++)
-            {
-                for (int j = 0; j < tamaño; j++)
-                {
-                    if (!jugadores.Contains((i, j)))
-                    {
-                        objetos.Add(new Objeto(Enum.GetValues(typeof(TipoObjeto)).GetValue(Random.Range(0, Enum.GetValues(typeof(TipoObjeto)).Length)), Enum.GetValues(typeof(EfectoObjeto)).GetValue(Random.Range(0, Enum.GetValues(typeof(EfectoObjeto)).Length))));
-                    }
-                }
-            }
+
         }
 
         public void VerificarColisiones()
