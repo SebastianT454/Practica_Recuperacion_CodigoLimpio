@@ -7,17 +7,31 @@ using System.Threading.Tasks;
 
 namespace Práctica1_recuperación_codigo_limpio
 {
+    public enum TipoObjeto
+    {
+        Ventaja,
+        Desventaja
+    }
+
+    public enum EfectoObjeto
+    {
+        Fuerza,
+        Vida
+    }
+
     public class Objeto
     {
+        private string nombre;
+        private Point posicion;
         private TipoObjeto tipo;
         private EfectoObjeto efecto;
-        private Point posicion;
 
-        public Objeto(TipoObjeto tipo, EfectoObjeto efecto, Point posicion)
+        public Objeto(string nombre, Point posicion, TipoObjeto tipo, EfectoObjeto efecto)
         {
+            this.nombre = nombre;
+            this.posicion = posicion;
             this.tipo = tipo;
             this.efecto = efecto;
-            this.posicion = posicion;
         }
 
         public TipoObjeto Tipo
@@ -30,6 +44,10 @@ namespace Práctica1_recuperación_codigo_limpio
             get { return efecto; }
         }
 
+        public string Nombre
+        {
+            get { return nombre; }
+        }
         public Point Posicion
         {
             get { return posicion; }

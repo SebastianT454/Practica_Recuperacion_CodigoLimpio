@@ -12,14 +12,16 @@ namespace Práctica1_recuperación_codigo_limpio
         private string[][] matriz;
         private Point tamano_matriz;
         private List<Objeto> objetos;
-        private List<Jugador> jugadores;
+        private Jugador? jugador_alien;
+        private Jugador? jugador_depredador;
 
         public Mapa(int m, int n)
         {
             this.matriz = Mapa.Crear_Matriz(m,n);
             this.tamano_matriz = new Point(m,n);
             this.objetos = new List<Objeto>();
-            this.jugadores = new List<Jugador>();
+            this.jugador_alien = null;
+            this.jugador_depredador = null;
         }
         public string[][] Matriz
         {
@@ -33,9 +35,13 @@ namespace Práctica1_recuperación_codigo_limpio
         {
             get { return objetos; }
         }
-        public List<Jugador> Jugadores
+        public Jugador JugadorAlien
         {
-            get { return jugadores; }
+            get { return jugador_alien; }
+        }
+        public Jugador JugadorDepredador
+        {
+            get { return jugador_depredador; }
         }
         public static string[][] Crear_Matriz(int m, int n)
         {
@@ -72,9 +78,9 @@ namespace Práctica1_recuperación_codigo_limpio
         
         public void AsignarJugadores() 
         {
-            string[][] matrix = matriz;
-            int m = tamano_matriz.X;
-            int n = tamano_matriz.Y;
+            string[][] matrix = Matriz;
+            int m = TamanoMatriz.X;
+            int n = TamanoMatriz.Y;
 
             IHabilidad habilidad_Alien = new HabilidadAlien();
             IHabilidad habilidad_Depredador = new HabilidadDepredador();
@@ -88,6 +94,9 @@ namespace Práctica1_recuperación_codigo_limpio
             // Asignamos los jugadores.
             matrix[0][0] = jugadorX.Nombre;
             matrix[m - 1][n - 1] = jugadorY.Nombre;
+
+            this.jugador_alien = jugadorX;
+            this.jugador_depredador = jugadorY;
         }
         
         public void ColocarObjetos()
@@ -95,18 +104,16 @@ namespace Práctica1_recuperación_codigo_limpio
 
         }
 
-        public void VerificarColisiones()
+        public void VerificarColisiones(Jugador jugador)
         {
-            foreach (Jugador jugador in jugadores)
+            foreach (Objeto objeto in objetos)
             {
-                foreach (Objeto objeto in objetos)
-                {
-                    if (jugador.Posicion == objeto.Posicion)
-                    {
-                        jugador.UsarObjeto(objeto);
-                    }
-                }
+              if (jugador.Posicion == objeto.Posicion)
+              {
+                jugador.UsarObjeto(objeto);
+              }
             }
+            
         }
 
     }
